@@ -1,0 +1,82 @@
+using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using DatariskMLOps.Domain.Entities;
+using DatariskMLOps.Infrastructure.Data.Converters;
+
+namespace DatariskMLOps.Infrastructure.Data;
+
+public class ApplicationDbContext : DbContext
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    {
+    }
+
+    public DbSet<Script> Scripts { get; set; }
+    public DbSet<ScriptVersion> ScriptVersions { get; set; }
+    public DbSet<Execution> Executions { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Script configuration
+        modelBuilder.Entity<Script>(entity =>
+        {
+            entity.ToTable("scripts");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id).HasColumnName("id").HasDefaultValueSql("gen_random_uuid()");
+            entity.Property(e => e.Name).HasColumnName("name").HasMaxLength(255).IsRequired();
+            entity.Property(e => e.Content).HasColumnName("content").HasColumnType("TEXT").IsRequired();
+            entity.Property(e => e.Description).HasColumnName("description").HasColumnType("TEXT");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at").HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at").HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            entity.HasMany(e => e.Executions)
+                  .WithOne(e => e.Script)
+                  .HasForeignKey(e => e.ScriptId)
+                  .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasMany(e => e.Versions)
+                  .WithOne(v => v.Script)
+                  .HasForeignKey(v => v.ScriptId)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Script Version configuration
+        modelBuilder.Entity<ScriptVersion>(entity =>
+        {
+            entity.ToTable("script_versions");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id).HasColumnName("id").HasDefaultValueSql("gen_random_uuid()");
+            entity.Property(e => e.ScriptId).HasColumnName("script_id").IsRequired();
+            entity.Property(e => e.Version).HasColumnName("version").IsRequired();
+            entity.Property(e => e.Content).HasColumnName("content").HasColumnType("TEXT").IsRequired();
+            entity.Property(e => e.ChangeLog).HasColumnName("change_log").HasColumnType("TEXT");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at").HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.IsActive).HasColumnName("is_active").HasDefaultValue(false);
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by").HasMaxLength(100);
+
+            entity.HasIndex(e => new { e.ScriptId, e.Version }).IsUnique();
+            entity.HasIndex(e => new { e.ScriptId, e.IsActive });
+        });
+
+        // Execution configuration
+        modelBuilder.Entity<Execution>(entity =>
+        {
+            entity.ToTable("executions");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id).HasColumnName("id").HasDefaultValueSql("gen_random_uuid()");
+            entity.Property(e => e.ScriptId).HasColumnName("script_id").IsRequired();
+            entity.Property(e => e.Status).HasColumnName("status").HasMaxLength(50).HasDefaultValue(ExecutionStatus.Pending)
+                  .HasConversion<string>();
+            entity.Property(e => e.InputData).HasColumnName("input_data").HasColumnType("JSONB").IsRequired()
+                  .HasConversion(new JsonDocumentConverter());
+            entity.Property(e => e.OutputData).HasColumnName("output_data").HasColumnType("JSONB")
+                  .HasConversion(new NullableJsonDocumentConverter());
+            entity.Property(e => e.ErrorMessage).HasColumnName("error_message").HasColumnType("TEXT");
+            entity.Property(e => e.StartedAt).HasColumnName("started_at").HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.CompletedAt).HasColumnName("completed_at");
+            entity.Property(e => e.ExecutionTimeMs).HasColumnName("execution_time_ms");
+        });
+    }
+}

@@ -1,0 +1,57 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatariskMLOps.API", "src\DatariskMLOps.API\DatariskMLOps.API.csproj", "{758D9D3A-BD56-B613-3752-6FFAB14CF644}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatariskMLOps.Domain", "src\DatariskMLOps.Domain\DatariskMLOps.Domain.csproj", "{133AFED0-E417-1296-2D2C-7F66A4E6B826}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatariskMLOps.Infrastructure", "src\DatariskMLOps.Infrastructure\DatariskMLOps.Infrastructure.csproj", "{3C8ABE97-5CC9-729A-0C8D-A3F1FB7DF340}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatariskMLOps.Tests.Integration", "src\DatariskMLOps.Tests.Integration\DatariskMLOps.Tests.Integration.csproj", "{6001A89D-54A1-CEAB-251F-34B0888DF62E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatariskMLOps.Tests.Unit", "src\DatariskMLOps.Tests.Unit\DatariskMLOps.Tests.Unit.csproj", "{CAFCEBAE-2285-3DD9-970E-F84D54582169}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{758D9D3A-BD56-B613-3752-6FFAB14CF644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{758D9D3A-BD56-B613-3752-6FFAB14CF644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{758D9D3A-BD56-B613-3752-6FFAB14CF644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{758D9D3A-BD56-B613-3752-6FFAB14CF644}.Release|Any CPU.Build.0 = Release|Any CPU
+		{133AFED0-E417-1296-2D2C-7F66A4E6B826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{133AFED0-E417-1296-2D2C-7F66A4E6B826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{133AFED0-E417-1296-2D2C-7F66A4E6B826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{133AFED0-E417-1296-2D2C-7F66A4E6B826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C8ABE97-5CC9-729A-0C8D-A3F1FB7DF340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C8ABE97-5CC9-729A-0C8D-A3F1FB7DF340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C8ABE97-5CC9-729A-0C8D-A3F1FB7DF340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C8ABE97-5CC9-729A-0C8D-A3F1FB7DF340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6001A89D-54A1-CEAB-251F-34B0888DF62E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6001A89D-54A1-CEAB-251F-34B0888DF62E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6001A89D-54A1-CEAB-251F-34B0888DF62E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6001A89D-54A1-CEAB-251F-34B0888DF62E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAFCEBAE-2285-3DD9-970E-F84D54582169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAFCEBAE-2285-3DD9-970E-F84D54582169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAFCEBAE-2285-3DD9-970E-F84D54582169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAFCEBAE-2285-3DD9-970E-F84D54582169}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{758D9D3A-BD56-B613-3752-6FFAB14CF644} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{133AFED0-E417-1296-2D2C-7F66A4E6B826} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{3C8ABE97-5CC9-729A-0C8D-A3F1FB7DF340} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{6001A89D-54A1-CEAB-251F-34B0888DF62E} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{CAFCEBAE-2285-3DD9-970E-F84D54582169} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D009ED9-65CB-49A4-9652-20AD3A9D0A17}
+	EndGlobalSection
+EndGlobal
