@@ -17,7 +17,7 @@ public class Execution
 
     // Navigation properties
     public virtual Script Script { get; set; } = null!;
-    public virtual ScriptVersion? ScriptVersion { get; set; }
+    //public virtual ScriptVersion? ScriptVersion { get; set; } // Temporariamente comentado
 }
 
 public enum ExecutionStatus

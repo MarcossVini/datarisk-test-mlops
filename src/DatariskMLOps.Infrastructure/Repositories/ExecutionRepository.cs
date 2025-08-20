@@ -17,7 +17,6 @@ public class ExecutionRepository : IExecutionRepository
     public async Task<Execution?> GetByIdAsync(Guid id)
     {
         return await _context.Executions
-            .Include(e => e.Script)
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 

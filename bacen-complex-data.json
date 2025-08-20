@@ -1,0 +1,77 @@
+{
+  "scriptId": "5de3cabe-d8d2-4445-a518-318cfe02d83d",
+  "data": [
+    {
+      "produto": "Intermediário",
+      "trimestre": "20231",
+      "nomeFuncao": "Crédito",
+      "nomeBandeira": "American Express",
+      "qtdCartoesAtivos": 335542,
+      "qtdCartoesEmitidos": 433549,
+      "qtdTransacoesNacionais": 9107357,
+      "valorTransacoesNacionais": 1617984610.42,
+      "qtdTransacoesInternacionais": 76424,
+      "valorTransacoesInternacionais": 41466368.94
+    },
+    {
+      "produto": "Empresarial",
+      "trimestre": "20232",
+      "nomeFuncao": "Crédito",
+      "nomeBandeira": "VISA",
+      "qtdCartoesAtivos": 1716709,
+      "qtdCartoesEmitidos": 3050384,
+      "qtdTransacoesNacionais": 43984902,
+      "valorTransacoesNacionais": 12846611557.78,
+      "qtdTransacoesInternacionais": 470796,
+      "valorTransacoesInternacionais": 397043258.04
+    },
+    {
+      "produto": "Empresarial",
+      "trimestre": "20232",
+      "nomeFuncao": "Crédito",
+      "nomeBandeira": "VISA",
+      "qtdCartoesAtivos": 500000,
+      "qtdCartoesEmitidos": 750000,
+      "qtdTransacoesNacionais": 15000000,
+      "valorTransacoesNacionais": 4000000000,
+      "qtdTransacoesInternacionais": 200000,
+      "valorTransacoesInternacionais": 150000000
+    },
+    {
+      "produto": "Empresarial",
+      "trimestre": "20233",
+      "nomeFuncao": "Crédito",
+      "nomeBandeira": "VISA",
+      "qtdCartoesAtivos": 1800000,
+      "qtdCartoesEmitidos": 3100000,
+      "qtdTransacoesNacionais": 45000000,
+      "valorTransacoesNacionais": 13000000000,
+      "qtdTransacoesInternacionais": 500000,
+      "valorTransacoesInternacionais": 400000000
+    },
+    {
+      "produto": "Empresarial",
+      "trimestre": "20234",
+      "nomeFuncao": "Crédito",
+      "nomeBandeira": "Mastercard",
+      "qtdCartoesAtivos": 1400000,
+      "qtdCartoesEmitidos": 2500000,
+      "qtdTransacoesNacionais": 35000000,
+      "valorTransacoesNacionais": 10000000000,
+      "qtdTransacoesInternacionais": 300000,
+      "valorTransacoesInternacionais": 250000000
+    },
+    {
+      "produto": "Empresarial",
+      "trimestre": "20234",
+      "nomeFuncao": "Crédito",
+      "nomeBandeira": "Mastercard",
+      "qtdCartoesAtivos": 800000,
+      "qtdCartoesEmitidos": 1200000,
+      "qtdTransacoesNacionais": 20000000,
+      "valorTransacoesNacionais": 5000000000,
+      "qtdTransacoesInternacionais": 150000,
+      "valorTransacoesInternacionais": 100000000
+    }
+  ]
+}

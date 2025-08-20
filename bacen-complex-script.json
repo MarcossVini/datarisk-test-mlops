@@ -1,0 +1,5 @@
+{
+  "name": "Processamento Bacen Complexo - Completo",
+  "content": "function process(data) {\n  const corporativeData = data.filter(item => item.produto === \"Empresarial\");\n\n  const byQuarterAndIssuer = corporativeData.reduce((acc, item) => {\n    const key = item.trimestre + \"-\" + item.nomeBandeira;\n    if (!acc[key]) {\n      acc[key] = {\n        trimestre: item.trimestre,\n        nomeBandeira: item.nomeBandeira,\n        qtdCartoesEmitidos: 0,\n        qtdCartoesAtivos: 0,\n        qtdTransacoesNacionais: 0,\n        valorTransacoesNacionais: 0,\n      };\n    }\n    acc[key].qtdCartoesEmitidos += item.qtdCartoesEmitidos;\n    acc[key].qtdCartoesAtivos += item.qtdCartoesAtivos;\n    acc[key].qtdTransacoesNacionais += item.qtdTransacoesNacionais;\n    acc[key].valorTransacoesNacionais += item.valorTransacoesNacionais;\n    return acc;\n  }, {});\n\n  return Object.values(byQuarterAndIssuer);\n}",
+  "description": "Processamento completo com filter + reduce + Object.values"
+}

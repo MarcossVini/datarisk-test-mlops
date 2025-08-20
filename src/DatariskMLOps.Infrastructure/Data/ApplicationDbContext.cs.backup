@@ -12,7 +12,7 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<Script> Scripts { get; set; }
-    public DbSet<ScriptVersion> ScriptVersions { get; set; }
+    // public DbSet<ScriptVersion> ScriptVersions { get; set; } // Temporariamente desabilitado
     public DbSet<Execution> Executions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,7 +42,8 @@ public class ApplicationDbContext : DbContext
                   .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // Script Version configuration
+        // Script Version configuration - TEMPORARIAMENTE DESABILITADO PARA TESTE
+        /*
         modelBuilder.Entity<ScriptVersion>(entity =>
         {
             entity.ToTable("script_versions");
@@ -59,6 +60,8 @@ public class ApplicationDbContext : DbContext
             entity.HasIndex(e => new { e.ScriptId, e.Version }).IsUnique();
             entity.HasIndex(e => new { e.ScriptId, e.IsActive });
         });
+        */
+        });
 
         // Execution configuration
         modelBuilder.Entity<Execution>(entity =>
@@ -67,7 +70,6 @@ public class ApplicationDbContext : DbContext
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).HasColumnName("id").HasDefaultValueSql("gen_random_uuid()");
             entity.Property(e => e.ScriptId).HasColumnName("script_id").IsRequired();
-            entity.Property(e => e.ScriptVersionId).HasColumnName("script_version_id");
             entity.Property(e => e.Status).HasColumnName("status").HasMaxLength(50).HasDefaultValue(ExecutionStatus.Pending)
                   .HasConversion<string>();
             entity.Property(e => e.InputData).HasColumnName("input_data").HasColumnType("JSONB").IsRequired()

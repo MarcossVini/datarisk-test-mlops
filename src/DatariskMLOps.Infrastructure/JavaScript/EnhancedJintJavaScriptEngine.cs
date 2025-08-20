@@ -1,6 +1,7 @@
 using Jint;
 using Jint.Native;
 using Jint.Runtime;
+using Jint.Native.Function;
 using DatariskMLOps.Domain.Interfaces;
 using DatariskMLOps.Domain.Services;
 using Microsoft.Extensions.Logging;
@@ -53,13 +54,35 @@ public class EnhancedJintJavaScriptEngine : IJavaScriptEngine
                 // Disponibiliza apenas o que é necessário
                 engine.SetValue("data", inputData);
 
-                _logger.LogInformation("Executing JavaScript with {DataSize} bytes",
-                    JsonSerializer.Serialize(inputData).Length);
+                _logger.LogInformation("Executing JavaScript with {DataSize} bytes. Data type: {DataType}",
+                    JsonSerializer.Serialize(inputData).Length, inputData?.GetType().Name);
+                _logger.LogInformation("Input data: {InputData}", JsonSerializer.Serialize(inputData));
 
-                // Executa o script como uma função que recebe data
-                var result = engine.Evaluate($"({script})(data)");
+                // Try to execute the script directly first
+                JsValue result;
+                try
+                {
+                    // Execute the script to define functions
+                    engine.Execute(script);
 
-                return result.ToObject() ?? new object();
+                    // Try to find and execute a function that processes data
+                    result = TryExecuteFunction(engine, inputData);
+
+                    // If no function found, execute as expression
+                    if (result.IsUndefined())
+                    {
+                        result = engine.Evaluate(script);
+                    }
+                }
+                catch
+                {
+                    // If script execution fails, try as direct expression
+                    result = engine.Evaluate(script);
+                }
+
+                var convertedResult = ConvertJsValueToObject(result);
+                _logger.LogInformation("JavaScript result converted to: {Type}", convertedResult?.GetType().Name);
+                return convertedResult ?? new object();
             }
             catch (JavaScriptException ex)
             {
@@ -77,6 +100,96 @@ public class EnhancedJintJavaScriptEngine : IJavaScriptEngine
                 throw new InvalidOperationException($"Unexpected error during script execution: {ex.Message}", ex);
             }
         }, cancellationToken);
+    }
+
+    private JsValue TryExecuteFunction(Engine engine, object inputData)
+    {
+        // List of common function names to try
+        var functionNames = new[] { "process", "execute", "run", "main", "processData" };
+
+        foreach (var functionName in functionNames)
+        {
+            try
+            {
+                var func = engine.GetValue(functionName);
+                if (!func.IsUndefined() && !func.IsNull())
+                {
+                    _logger.LogInformation("Found and executing function: {FunctionName}", functionName);
+                    return engine.Evaluate($"{functionName}(data)");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning("Failed to execute function {FunctionName}: {Error}", functionName, ex.Message);
+            }
+        }
+
+        // If no function found, return undefined to trigger fallback
+        _logger.LogInformation("No function found, trying to execute as expression");
+        return JsValue.Undefined;
+    }
+
+    private object ConvertJsValueToObject(JsValue jsValue)
+    {
+        if (jsValue.IsUndefined() || jsValue.IsNull())
+        {
+            return null!;
+        }
+
+        if (jsValue.IsBoolean())
+        {
+            return jsValue.AsBoolean();
+        }
+
+        if (jsValue.IsNumber())
+        {
+            return jsValue.AsNumber();
+        }
+
+        if (jsValue.IsString())
+        {
+            return jsValue.AsString();
+        }
+
+        if (jsValue.IsArray())
+        {
+            var array = jsValue.AsArray();
+            var result = new List<object>();
+            for (uint i = 0; i < array.Length; i++)
+            {
+                var element = array.Get(i.ToString());
+                result.Add(ConvertJsValueToObject(element));
+            }
+            return result.ToArray();
+        }
+
+        if (jsValue.IsObject())
+        {
+            var obj = jsValue.AsObject();
+            var result = new Dictionary<string, object>();
+
+            // Get properties using GetOwnProperties
+            foreach (var property in obj.GetOwnProperties())
+            {
+                var key = property.Key.AsString();
+                var value = property.Value.Value;
+                if (!value.IsUndefined())
+                {
+                    result[key] = ConvertJsValueToObject(value);
+                }
+            }
+            return result;
+        }
+
+        // Fallback to ToObject for other types
+        try
+        {
+            return jsValue.ToObject() ?? new object();
+        }
+        catch
+        {
+            return jsValue.ToString() ?? string.Empty;
+        }
     }
 
     private void ConfigureSecureEnvironment(Engine engine)
