@@ -105,8 +105,8 @@ chmod +x start.sh
 ### **Método 3: Teste Direto do Caso Bacen**
 
 ```powershell
-# Execute o script de teste automatizado que valida o caso real
-.\test-api.ps1
+# Execute o script de teste automatizado que valida o caso real do Bacen
+.\test-bacen-case.ps1
 ```
 
 ## **Endpoints da API (Funcionando 100%)**
@@ -162,7 +162,7 @@ src/
 
 ```powershell
 # Executa o caso completo do Bacen automaticamente
-.\test-api.ps1
+.\test-bacen-case.ps1
 ```
 
 ### **Caso de Uso: Bacen - Cartões de Crédito**
@@ -499,7 +499,7 @@ docker exec -it datarisk-test-postgres-1 psql -U postgres -d datarisk_mlops -c "
 4. **Executar Teste Automatizado**
 
    ```powershell
-   .\test-api.ps1
+   .\test-bacen-case.ps1
    ```
 
 5. **Criar Scripts Customizados**
