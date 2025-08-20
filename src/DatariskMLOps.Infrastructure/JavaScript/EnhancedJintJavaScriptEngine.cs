@@ -66,8 +66,7 @@ public class EnhancedJintJavaScriptEngine : IJavaScriptEngine
                     engine.Execute(script);
 
                     // Try to find and execute a function that processes data
-                    result = TryExecuteFunction(engine, inputData);
-
+                    result = TryExecuteFunction(engine, inputData ?? new object());
                     // If no function found, execute as expression
                     if (result.IsUndefined())
                     {

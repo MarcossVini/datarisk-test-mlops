@@ -106,3 +106,28 @@ Thumbs.db
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Backup files
+*.backup
+*_backup_*.sql
+backup_*.sql
+
+# Development scripts
+test-*.ps1
+*.dev.json
+
+# NuGet
+packages/
+*.nupkg
+*.nuspec
+
+# ASP.NET Core
+appsettings.Development.json
+appsettings.*.json
+!appsettings.json
+launchSettings.json
+
+# Docker volumes
+postgres_data/
+redis_data/
+backups/

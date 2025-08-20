@@ -13,7 +13,7 @@ REM Verificar status dos serviços
 docker-compose ps
 
 echo Ambiente iniciado com sucesso!
-echo API disponivel em: http://localhost:5000
+echo API disponivel em: http://localhost:5000 
 echo Swagger UI: http://localhost:5000/swagger
 echo Hangfire Dashboard: http://localhost:5000/hangfire
 echo Health Check: http://localhost:5000/health

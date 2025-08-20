@@ -111,7 +111,7 @@ chmod +x start.sh
 
 ## **Endpoints da API (Funcionando 100%)**
 
-### **Base URL**: `http://localhost:8080/api`
+### **Base URL**: `http://localhost:5000/api`
 
 ### **1. Gestão de Scripts**
 
@@ -178,13 +178,13 @@ Após inicialização (aguarde ~30 segundos):
 
 | Serviço                 | URL                            | Descrição                                 |
 | ----------------------- | ------------------------------ | ----------------------------------------- |
-| **Interface Principal** | http://localhost:8080/swagger  | **ACESSE AQUI** - Documentação interativa |
-| **Health Check**        | http://localhost:8080/health   | Status dos serviços                       |
-| **Dashboard Jobs**      | http://localhost:8080/hangfire | Jobs em background                        |
-| **API REST**            | http://localhost:8080/api/\*   | Endpoints da API                          |
+| **Interface Principal** | http://localhost:5000/swagger  | **ACESSE AQUI** - Documentação interativa |
+| **Health Check**        | http://localhost:5000/health   | Status dos serviços                       |
+| **Dashboard Jobs**      | http://localhost:5000/hangfire | Jobs em background                        |
+| **API REST**            | http://localhost:5000/api/\*   | Endpoints da API                          |
 
-> **Nota**: O endpoint raiz `http://localhost:8080/` não está configurado (404 é normal).  
-> **Use**: `http://localhost:8080/swagger` como interface principal!
+> **Nota**: O endpoint raiz `http://localhost:5000/` não está configurado (404 é normal).  
+> **Use**: `http://localhost:5000/swagger` como interface principal!
 
 ## **Como Usar a API**
 
@@ -199,13 +199,13 @@ $script = @{
     description = "Filtra apenas itens ativos"
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri "http://localhost:8080/api/scripts" -Method POST -Body $script -ContentType "application/json"
+Invoke-RestMethod -Uri "http://localhost:5000/api/scripts" -Method POST -Body $script -ContentType "application/json"
 ```
 
 **cURL:**
 
 ```bash
-curl -X POST "http://localhost:8080/api/scripts" \
+curl -X POST "http://localhost:5000/api/scripts" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Filtro Básico",
@@ -280,13 +280,13 @@ Este script:
 
 ```powershell
 # Backup do Banco
-Invoke-RestMethod -Uri "http://localhost:8080/api/backup/database" -Method POST
+Invoke-RestMethod -Uri "http://localhost:5000/api/backup/database" -Method POST
 
 # Backup de Logs
-Invoke-RestMethod -Uri "http://localhost:8080/api/backup/logs" -Method POST
+Invoke-RestMethod -Uri "http://localhost:5000/api/backup/logs" -Method POST
 
 # Limpeza de Backups Antigos
-Invoke-RestMethod -Uri "http://localhost:8080/api/backup/cleanup" -Method POST
+Invoke-RestMethod -Uri "http://localhost:5000/api/backup/cleanup" -Method POST
 ```
 
 ### **Backup Automático**
@@ -377,7 +377,7 @@ function process(data) {
 
 ```powershell
 # Verificar saúde dos serviços
-Invoke-RestMethod -Uri "http://localhost:8080/health"
+Invoke-RestMethod -Uri "http://localhost:5000/health"
 # Resposta esperada: "Healthy"
 ```
 
@@ -396,7 +396,7 @@ docker-compose ps
 
 ### **Hangfire Dashboard**
 
-- **URL**: http://localhost:8080/hangfire
+- **URL**: http://localhost:5000/hangfire
 - **Funcionalidades**:
   - Visualizar jobs de backup automático
   - Monitorar execuções de scripts
@@ -445,11 +445,11 @@ docker-compose up -d --build
 ### **Problema: Porta em Uso**
 
 ```bash
-# Windows - Verificar processo na porta 8080
-netstat -ano | findstr :8080
+# Windows - Verificar processo na porta 5000
+netstat -ano | findstr :5000
 
 # Linux/Mac
-lsof -i :8080
+lsof -i :5000
 ```
 
 ### **Problema: Container não inicia**
@@ -489,12 +489,12 @@ docker exec -it datarisk-test-postgres-1 psql -U postgres -d datarisk_mlops -c "
 2. **Verificar Saúde**
 
    ```powershell
-   Invoke-RestMethod -Uri "http://localhost:8080/health"
+   Invoke-RestMethod -Uri "http://localhost:5000/health"
    ```
 
 3. **Explorar API via Swagger**
 
-   - Acesse: http://localhost:8080/swagger
+   - Acesse: http://localhost:5000/swagger
 
 4. **Executar Teste Automatizado**
 
@@ -511,7 +511,7 @@ docker exec -it datarisk-test-postgres-1 psql -U postgres -d datarisk_mlops -c "
    - Teste com dados simples primeiro
 
 7. **Monitorar via Hangfire**
-   - Acesse: http://localhost:8080/hangfire
+   - Acesse: http://localhost:5000/hangfire
 
 ## **Métricas e Performance (Reais)**
 
@@ -528,7 +528,7 @@ docker exec -it datarisk-test-postgres-1 psql -U postgres -d datarisk_mlops -c "
 
 _Todos os requisitos atendidos • Caso Bacen validado • Performance otimizada_
 
-_Para mais detalhes técnicos, consulte a documentação Swagger em http://localhost:8080/swagger_
+_Para mais detalhes técnicos, consulte a documentação Swagger em http://localhost:5000/swagger_
 
 ```sql
 CREATE TABLE executions (
@@ -659,14 +659,6 @@ dotnet ef database update -p src/DatariskMLOps.Infrastructure -s src/DatariskMLO
 - **Health Checks**: `/health` endpoint
 - **Hangfire Dashboard**: `/hangfire` para monitorar jobs
 - **Métricas**: Logs estruturados com Serilog
-
-## 🤝 Contribuição
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
 
 ## 📄 Licença
 
